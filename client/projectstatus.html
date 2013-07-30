@@ -1,0 +1,167 @@
+<head>
+	<title>Print_job</title>
+</head>
+
+<body>
+  {{> header}}
+	{{> statusboard}}
+	<div id="footer">
+	</div>
+</body>
+
+<template name="statusboard">
+	<div class="row">
+		<div class="seven columns">
+			<!--<span class="title">print_job</span>-->
+      <img src='local.png'>
+		</div>
+  {{#if isLoggedIn}}
+		<div class="five columns">
+			<form class="form-inline" align="right">
+				<div class="control-group">
+					<label class="control-label" for="project_name"></label>
+					<div class="controls">
+						<input class="input" type="text" id="project_name" />
+						<a id="add_project" class="button add button-primary">Add New Project</a>
+					</div>
+				</div>
+			</form>
+		</div>
+  {{/if}}
+	</div>
+
+  {{#if isLoggedIn}}
+  <div class="row">
+    <table class="twelve">
+      <thead>
+        <tr>
+          <th>Time Created</th>
+          <th>Project</th>
+          <th>Target Reached</th>
+          <th>Risk</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each projects}}
+        {{> project}}
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+	{{#if selected_name}}
+	<div class="details">
+		<div class="row">
+			<div class="six columns">
+				<h3>{{selected_name}}</h3>
+			</div>
+			<div class="six columns">
+				<a class="button cancel button">Cancel</a>
+				<a class="button update button-primary">Save Changes</a>
+				<a class="button remove button-danger">Remove Project</a>
+			</div>
+		</div>
+
+    <div class="row">
+		  <div class="four columns">
+        <div class="control-group">
+				  <label class="control-label" for="project_name_edit">Project Name</label>
+				  <div class="controls">
+            <input type="text" id="project_name_edit" value="{{selected_name}}">
+				  </div>
+        </div>
+
+  			<div class="control-group">
+  				<label class="control-label" for="project_status_edit">Status</label>
+  				<div class="controls">
+  					<select id="project_status_edit">
+  						<option {{isStatusSelected selectedStatus "GOOD"}}>GOOD</option>
+  						<option {{isStatusSelected selectedStatus "IN PROGRESS"}}>IN PROGRESS</option>
+  						<option {{isStatusSelected selectedStatus "BAD"}}>BAD</option>
+  						<option {{isStatusSelected selectedStatus "UGLY"}}>UGLY</option>
+  					</select>
+  				</div>
+  			</div>
+
+  			<div class="control-group">
+  				<label class="control-label" for="project_risk_level_edit">Risk</label>
+  				<div class="controls">
+  					<select id="project_risk_level_edit">
+  						<option {{isRiskSelected selectedRisk "SAFE"}}>SAFE</option>
+  						<option {{isRiskSelected selectedRisk "DODGY"}}>DODGY</option>
+  						<option {{isRiskSelected selectedRisk "DANGEROUS"}}>DANGEROUS</option>
+  					</select>
+  				</div>
+  			</div>
+
+  			<div class="control-group">
+  				<label class="control-label" for="project_target_edit">Target Achieved</label>
+  				<div class="controls">
+  					<select id="project_target_edit">
+  						<option {{isTargetSelected selectedTarget 100}}>100%</option>
+  						<option {{isTargetSelected selectedTarget 90}}>90%</option>
+  						<option {{isTargetSelected selectedTarget 80}}>80%</option>
+  						<option {{isTargetSelected selectedTarget 70}}>70%</option>
+  						<option {{isTargetSelected selectedTarget 60}}>60%</option>
+  						<option {{isTargetSelected selectedTarget 50}}>50%</option>
+  						<option {{isTargetSelected selectedTarget 40}}>40%</option>
+  						<option {{isTargetSelected selectedTarget 30}}>30%</option>
+  						<option {{isTargetSelected selectedTarget 20}}>20%</option>
+  						<option {{isTargetSelected selectedTarget 10}}>10%</option>
+  						<option {{isTargetSelected selectedTarget 00}}>0%</option>
+  					</select>
+  				</div>
+  			</div>
+
+  			<div class="control-group">
+  				<label class="control-label" for="project_release_edit">Release</label>
+  				<div class="controls">
+  					<input type="text" id="project_release_edit" value="{{selected_release}}">
+  				</div>
+  			</div>
+  			</br>
+  			<a class="button update button-primary">Save Changes</a>
+  			<a class="button cancel">Cancel</a>
+  		</div>
+
+  		<div class="eight columns">
+  			<div class="control-group">
+  				<label class="control-label" for="project_comment_edit">Comments</label>
+  				<div class="controls">
+  					<textarea rows="9" id="project_comment_edit">{{selected_comment}}</textarea>
+  				</div>
+  			</div>
+  			<div class="control-group">
+  				<label class="control-label" for="project_risk_edit">Risks</label>
+  				<div class="controls">
+  					<textarea rows="8" id="project_risk_edit">{{selected_risk}}</textarea>
+  				</div>
+  			</div>
+      </div>
+    </div>
+	</div>
+	{{/if}}
+
+	{{#unless selected_name}}
+    <div class="row">
+        <div class="none">
+          Click a project to edit / see more detail
+        </div>
+    </div>
+	{{/unless}}
+  {{/if}}
+</template>
+
+<template name="project">
+  <tr class="project {{selected}}">
+    <td>{{date_created}}</td>
+    <td>{{name}}</td>
+    <td>{{target}}</td>
+    <td style="color:{{getRiskColor risk_level}}">{{risk_level}}</td>
+    <td style="color:{{getStatusColor status}}">{{status}}</td>
+  </tr>
+</template>
+
+
+

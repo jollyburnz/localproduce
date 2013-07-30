@@ -1,0 +1,19 @@
+{
+  "meteor": {
+    "git": "https://github.com/meteor/meteor.git",
+    "branch": "master",
+    "commit": "2d8b41a87cec884489ead138b5dfea31487363f3"
+  },
+  "dependencies": {
+    "basePackages": {
+      "foundation-custom": {}
+    },
+    "packages": {
+      "foundation-custom": {
+        "git": "https://github.com/digioak/meteor-foundation-custom.git",
+        "tag": "v0.0.7",
+        "commit": "78a2f2def62709836c58dcca894ea6f3702d940c"
+      }
+    }
+  }
+}
