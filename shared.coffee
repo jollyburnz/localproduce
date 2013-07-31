@@ -1,12 +1,3 @@
-Projects = new Meteor.Collection("projects")
-Projects.allow
-  insert: ->
-    true
-  update: ->
-    true
-  remove: ->
-    true
-
 # On server startup, create some projects if the database is empty. Left over from the example to show where server code would go if there were any!
 if Meteor.is_server
   Meteor.startup ->
